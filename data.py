@@ -1,6 +1,7 @@
 import clip
 import torch
 import chromadb
+import os
 
 global device
 global model
@@ -21,6 +22,8 @@ except:
     print("Error loading model and data")
     exit()
 try:
+    if not os.path.exists(DB_LOCATION):
+        os.makedirs(DB_LOCATION)
     client = chromadb.PersistentClient(path=DB_LOCATION)
     #client = chromadb.HttpClient(host='localhost', port=8000)
     videos_collection = client.get_or_create_collection(

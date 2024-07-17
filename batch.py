@@ -17,8 +17,10 @@ def main():
         end_video = (int(args[1]))
         video_list = os.listdir('./videos')
         video_list.sort(reverse=False)
-        print(f"{len(video_list)} videos  to be processed")
-        logger.info(f"{len(video_list)} videos  to be processed")
+        print(f"{len(video_list)} video(s) in video folder")
+        logger.info(f"{len(video_list)} video(s) in video folder")
+        print(f"{str(end_video-start_video-1)} video(s)  to be processed")
+        logger.info(f"{str(end_video-start_video-1)} video(s)  to be processed")
         msg = ""
         for i,file in enumerate(video_list):
             if i >= start_video and i < end_video:

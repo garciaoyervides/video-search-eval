@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import socket
 import sys
+import os
 import logging
 logger = logging.getLogger(__name__)
 socket.setdefaulttimeout(15)
@@ -33,6 +34,8 @@ def main(args):
         files = zip(filenames,sources)
         sorted_files = sorted(files, key=lambda x: x[0])
 
+        if not os.path.exists("./videos"):
+            os.makedirs("./videos")
         downloaded_videos = 0
         not_downloaded_videos=0
         for i,file in enumerate(sorted_files):
