@@ -55,5 +55,6 @@ def clip_video(video_name, time, file_name):
         os.makedirs("./tmp/clips")
     video = VideoFileClip("./videos/" + video_name).resize(width=360)
     clip = video.subclip(start_time, end_time)
-    clip.write_videofile(f"./tmp/clips/{file_name}.mp4")
+    #clip.write_videofile(f"./tmp/clips/{file_name}.mp4",temp_audiofile=f"./tmp/clips/{file_name}.mp3")
+    clip.write_videofile(f"./tmp/clips/{file_name}.mp4",audio=False)
     return f"./tmp/clips/{file_name}.mp4"

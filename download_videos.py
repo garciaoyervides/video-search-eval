@@ -5,6 +5,7 @@ import socket
 import sys
 import os
 import logging
+import time
 logger = logging.getLogger(__name__)
 socket.setdefaulttimeout(15)
 
@@ -43,17 +44,17 @@ def main(args):
                 file_name = file[0]
                 file_url = file[1]
                 try:
-                    print(f'{i} {file_url}/{get_video_link(file_url)}')
-                    logger.info(f'{i} {file_url}/{get_video_link(file_url)}')
+                    print(f'{time.strftime("%l:%M%p %Z on %b %d, %Y")} -- {i} {file_url}/{get_video_link(file_url)}')
+                    logger.info(f'{time.strftime("%l:%M%p %Z on %b %d, %Y")} -- {i} {file_url}/{get_video_link(file_url)}')
                     urllib.request.urlretrieve(f'{file_url}/{get_video_link(file_url)}', f'./videos/{file_name}')
                     downloaded_videos += 1
                 except:
-                    print(f"{i} {file_name} not available")
-                    logger.info(f"{i} {file_name} not available")
+                    print(f'{time.strftime("%l:%M%p %Z on %b %d, %Y")} -- {i} {file_name} not available')
+                    logger.info(f'{time.strftime("%l:%M%p %Z on %b %d, %Y")} -- {i} {file_name} not available')
                     not_downloaded_videos += 1
 
-        print(f'VIDEO DOWNLOAD ENDED : {start_video}-{end_video}, {downloaded_videos} downloaded, {not_downloaded_videos} not downloaded')
-        logger.info(f'VIDEO DOWNLOAD ENDED : {start_video}-{end_video}, {downloaded_videos} downloaded, {not_downloaded_videos} not downloaded')
+        print(f'{time.strftime("%l:%M%p %Z on %b %d, %Y")} -- VIDEO DOWNLOAD ENDED : {start_video}-{end_video}, {downloaded_videos} downloaded, {not_downloaded_videos} not downloaded')
+        logger.info(f'{time.strftime("%l:%M%p %Z on %b %d, %Y")} -- IDEO DOWNLOAD ENDED : {start_video}-{end_video}, {downloaded_videos} downloaded, {not_downloaded_videos} not downloaded')
                 
 if __name__ == "__main__":
     main(sys.argv[1:])

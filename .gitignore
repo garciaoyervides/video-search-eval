@@ -1,8 +1,12 @@
 db/*
+db
 tmp/*
 tmp/clips/*
 tmp/img/*
 videos/*
+videos
 venv
 __pycache__
 *.log
+*.out
+*.mp3

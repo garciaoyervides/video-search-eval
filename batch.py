@@ -4,13 +4,15 @@ from upload import process_video_to_db
 import os
 import logging
 logger = logging.getLogger(__name__)
+logging.basicConfig(filename='batch.log', encoding='utf-8', level=logging.DEBUG, format='%(asctime)s %(message)s')
 
 def main():
     videos_processed = 0
     videos_not_processed = 0
     args = sys.argv[1:]
-    print(time.strftime('%l:%M%p %Z on %b %d, %Y'))
-    logger.info(time.strftime('%l:%M%p %Z on %b %d, %Y'))
+    #print(time.strftime('%l:%M%p %Z on %b %d, %Y'))
+    #logger.info(time.strftime('%l:%M%p %Z on %b %d, %Y'))
+    logger.info(f'Starting...')
     if len(args) == 2:
         #process all videos in batches
         start_video = (int(args[0]))
@@ -19,8 +21,8 @@ def main():
         video_list.sort(reverse=False)
         print(f"{len(video_list)} video(s) in video folder")
         logger.info(f"{len(video_list)} video(s) in video folder")
-        print(f"{str(end_video-start_video-1)} video(s)  to be processed")
-        logger.info(f"{str(end_video-start_video-1)} video(s)  to be processed")
+        print(f"{str(end_video-start_video)} video(s)  to be processed")
+        logger.info(f"{str(end_video-start_video)} video(s)  to be processed")
         msg = ""
         for i,file in enumerate(video_list):
             if i >= start_video and i < end_video:
@@ -28,6 +30,8 @@ def main():
                     try:
                         msb = f"./msb/{file.replace('.mp4', '.msb')}"
                         if os.path.isfile(msb):
+                            print(f"{i} - {file} is starting segmentation")
+                            logger.info(f"{i} - {file} is starting segmentation")
                             response = process_video_to_db(file)
                             if response:
                                 videos_processed += 1
@@ -41,15 +45,17 @@ def main():
                     except:
                         videos_not_processed += 1
                         msg = (f"{file} segmentation file not available")
-                    print(msg)
-                    logger.info(msg)
+                    #print(f"{time.strftime('%l:%M%p %Z on %b %d, %Y')} - {i} -{msg}")
+                    #logger.info(f"{time.strftime('%l:%M%p %Z on %b %d, %Y')} - {i} - {msg}")
+                    print(f"{i} - {msg}")
+                    logger.info(f"{i} - {msg}")
     print(f"{videos_processed} videos processed")
     logger.info(f"{videos_processed} videos processed")
     print(f"{videos_not_processed} videos NOT processed")
     logger.info(f"{videos_not_processed} videos NOT processed")
 
-    print(time.strftime('%l:%M%p %Z on %b %d, %Y'))
-    logger.info(time.strftime('%l:%M%p %Z on %b %d, %Y'))
-
+    #print(time.strftime('%l:%M%p %Z on %b %d, %Y'))
+    #logger.info(time.strftime('%l:%M%p %Z on %b %d, %Y'))
+    logger.info(f'Ending...')
 if __name__ == "__main__":
     main()

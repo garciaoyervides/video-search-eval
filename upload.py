@@ -13,7 +13,8 @@ import os
 import requests
 import io
 import csv
-import shutil 
+import shutil
+import logging
 
 
 def scenes_listing(binary_tags):
@@ -489,7 +490,7 @@ def save_segments(video_name, segmentation):
 def process_video_to_db(video_name):
     
     write_to_log(f"{video_name} is starting segmentation")
-    print(f"{video_name} is starting segmentation")
+    #print(f"{video_name} is starting segmentation")
     #get image features
     image_features, time = process_video_frames(video_name)
     #Get segmentation
@@ -497,6 +498,6 @@ def process_video_to_db(video_name):
     #Save to DB
     save_segments(video_name,segmentation)
     write_to_log(f"{video_name} was processed successfully")
-    print(f"{video_name} was processed successfully")
+    #print(f"{video_name} was processed successfully")
     return True
     

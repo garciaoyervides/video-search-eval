@@ -28,7 +28,7 @@ if search_type == "Image":
     search_uploaded_file = st.file_uploader("Choose an image file", help="Use a high quality picture", key="Search Upload Image Button", type=['jpg','jpeg','png','bmp'])
     if search_uploaded_file:
         st.image(search_uploaded_file)
-search_results = st.slider('Amount of results', 1, 10, 1)
+search_results = st.slider('Amount of results', 1, 30, 1)
 #search_expand_treshold = st.slider('Expand Treshold', 0.0, 1.0, 0.05)
 if st.button('Search', key="Search Video Button", disabled=
                 ((search_type == "Text" and search_term == "") or
@@ -55,16 +55,17 @@ if st.button('Search', key="Search Video Button", disabled=
             if not os.path.exists("./tmp"):
                 os.makedirs("./tmp")
             for i,d in enumerate(data):
-                video_decode = base64.b64decode(d['video']) 
-                video_write = open(f'./tmp/segment_{str(i).zfill(3)}.mp4', 'wb')
-                video_write.write(video_decode)
-                video_file = open(f'./tmp/segment_{str(i).zfill(3)}.mp4', 'rb')
-                video_bytes = video_file.read()
-                st.divider()
-                st.write(f"segment_{str(i).zfill(3)}.mp4 Distance: {d['distance']}")
-                if (d['video'] != ""):
-                    st.video(video_bytes)
-                if 'identifier' in d:
-                    st.caption(f"{d['identifier']}")
+                if d['distance'] > 0:
+                    video_decode = base64.b64decode(d['video']) 
+                    video_write = open(f'./tmp/segment_{str(i).zfill(3)}.mp4', 'wb')
+                    video_write.write(video_decode)
+                    video_file = open(f'./tmp/segment_{str(i).zfill(3)}.mp4', 'rb')
+                    video_bytes = video_file.read()
+                    st.divider()
+                    st.write(f"segment_{str(i).zfill(3)}.mp4 Distance: {d['distance']}")
+                    if (d['video'] != ""):
+                        st.video(video_bytes)
+                    if 'identifier' in d:
+                        st.caption(f"{d['identifier']}")
     else:
         st.error("Error getting data: {}".format(response.status_code))
